@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">To Do Book</string>
+    <string name="add">Add</string>
+    <string name="tasks">Tasks</string>
+    <string name="search">Search</string>
+    <string name="filter">Filter</string>
+    <string name="delete_all">Delete All</string>
+    <string name="delete">Delete</string>
+    <string name="clear">Clear</string>
+    <string name="add_task">Please add task.</string>
+    <string name="empty_screen_icon">Sad Face</string>
+    <string name="app_bar_task">Add Task</string>
+    <string name="back">Back</string>
+    <string name="close">Close</string>
+    <string name="update">Update</string>
+    <string name="arrow_down">Arrow Drop Down</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="max_character">Enter title (max 28 characters)"</string>
+    <string name="fields">Field(s) Empty!"</string>
+
+</resources>
