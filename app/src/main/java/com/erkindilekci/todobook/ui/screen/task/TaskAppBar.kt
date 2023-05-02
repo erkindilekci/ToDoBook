@@ -9,12 +9,13 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.erkindilekci.todobook.R
+import com.erkindilekci.todobook.components.DisplayAlertDialog
 import com.erkindilekci.todobook.data.models.Priority
 import com.erkindilekci.todobook.data.models.TodoTask
 import com.erkindilekci.todobook.ui.theme.AppBar
@@ -77,10 +78,28 @@ fun ExistingTaskAppBar(
         contentColor = Color.White,
         title = { Text(text = selectedTask.title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
         actions = {
-            DeleteAction(onDeleteClicked = navigateToListScreen)
-            UpdateAction(onUpdateClicked = navigateToListScreen)
+            Actions(selectedTask = selectedTask, navigateToListScreen = navigateToListScreen)
         }
     )
+}
+
+@Composable
+fun Actions(
+    selectedTask: TodoTask,
+    navigateToListScreen: (Action) -> Unit
+) {
+    var openDialog by remember { mutableStateOf(false) }
+
+    DisplayAlertDialog(
+        title = stringResource(id = R.string.delete_task, selectedTask.title),
+        message = stringResource(id = R.string.sure, selectedTask.title),
+        openDialog = openDialog,
+        closeDialog = { openDialog = false },
+        onYesClicked = { navigateToListScreen(Action.DELETE) }
+    )
+    
+    DeleteAction(onDeleteClicked = { openDialog = true })
+    UpdateAction(onUpdateClicked = navigateToListScreen)
 }
 
 @Composable
@@ -94,9 +113,9 @@ fun CloseAction(
 
 @Composable
 fun DeleteAction(
-    onDeleteClicked: (Action) -> Unit
+    onDeleteClicked: () -> Unit
 ) {
-    IconButton(onClick = { onDeleteClicked(Action.DELETE) }) {
+    IconButton(onClick = { onDeleteClicked() }) {
         Icon(imageVector = Icons.Filled.Delete, contentDescription = stringResource(id = R.string.delete), tint = Color.White)
     }
 }
@@ -108,15 +127,4 @@ fun UpdateAction(
     IconButton(onClick = { onUpdateClicked(Action.UPDATE) }) {
         Icon(imageVector = Icons.Filled.Check, contentDescription = stringResource(id = R.string.update), tint = Color.White)
     }
-}
-
-@Preview
-@Composable
-fun NewTaskAppBarPreview() {
-    NewTaskAppBar(navigateToListScreen = {})
-}
-@Preview
-@Composable
-fun ExistingTaskAppBarPreview() {
-    ExistingTaskAppBar(navigateToListScreen = {}, selectedTask = TodoTask(5, "Hepinize Merhaba Arkadaslar", "Degerli kardeslerim, degerli dostlarim bugun burada", Priority.MEDIUM))
 }

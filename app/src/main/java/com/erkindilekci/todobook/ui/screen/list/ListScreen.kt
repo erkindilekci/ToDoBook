@@ -12,7 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.erkindilekci.todobook.R
-import com.erkindilekci.todobook.ui.theme.*
+import com.erkindilekci.todobook.ui.theme.AppBar
+import com.erkindilekci.todobook.ui.theme.Background
+import com.erkindilekci.todobook.ui.theme.FabColor
 import com.erkindilekci.todobook.ui.viewmodel.SharedViewModel
 import com.erkindilekci.todobook.util.Action
 import com.erkindilekci.todobook.util.SearchAppBarState
@@ -22,16 +24,21 @@ import java.util.*
 @Composable
 fun ListScreen(
     navigateToTaskScreen: (taskId: Int) -> Unit,
-    sharedViewModel: SharedViewModel
+    sharedViewModel: SharedViewModel,
+    action: Action
 ) {
-    LaunchedEffect(key1 = true) {
-        sharedViewModel.getAllTasks()
+    LaunchedEffect(key1 = action) {
+        sharedViewModel.handleDatabaseActions(action)
     }
-
-    val action by sharedViewModel.action
 
     val allTasks by sharedViewModel.allTasks.collectAsState()
     val searchedTasks by sharedViewModel.searchedTasks.collectAsState()
+    val filterState by sharedViewModel.filterState.collectAsState()
+    val lowPriorityTasks by sharedViewModel.lowPriorityTasks.collectAsState()
+    val mediumPriorityTasks by sharedViewModel.mediumPriorityTasks.collectAsState()
+    val highPriorityTasks by sharedViewModel.highPriorityTasks.collectAsState()
+    val nonePriorityTasks by sharedViewModel.nonePriorityTasks.collectAsState()
+
     val searchAppBarState: SearchAppBarState by sharedViewModel.searchAppBarState
     val searchTextState: String by sharedViewModel.searchTextState
 
@@ -39,7 +46,7 @@ fun ListScreen(
 
     DisplaySnackBar(
         scaffoldState = scaffoldState,
-        handleDatabaseActions = { sharedViewModel.handleDatabaseActions(action = action) },
+        onComplete = { sharedViewModel.action.value = it },
         onUndoClicked = { sharedViewModel.action.value = it },
         taskTitle = sharedViewModel.title.value,
         action = action
@@ -80,7 +87,17 @@ fun ListScreen(
                     allTasks = allTasks,
                     navigateToTaskScreen = navigateToTaskScreen,
                     searchedTasks = searchedTasks,
-                    searchAppBarState = searchAppBarState
+                    searchAppBarState = searchAppBarState,
+                    lowPriorityTasks = lowPriorityTasks,
+                    mediumPriorityTasks = mediumPriorityTasks,
+                    highPriorityTasks = highPriorityTasks,
+                    nonePriorityTasks = nonePriorityTasks,
+                    filterState = filterState,
+                    onSwipeToDelete = { action, todoTask ->
+                        sharedViewModel.action.value = action
+                        sharedViewModel.updateTaskFields(todoTask)
+                        scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                    }
                 )
             }
         },
@@ -105,21 +122,22 @@ fun MyFabButton(
 @Composable
 fun DisplaySnackBar(
     scaffoldState: ScaffoldState,
-    handleDatabaseActions: () -> Unit,
+    onComplete: (Action) -> Unit,
     onUndoClicked: (Action) -> Unit,
     taskTitle: String,
     action: Action
 ) {
-    handleDatabaseActions()
-
     val scope = rememberCoroutineScope()
+    val string = stringResource(id = R.string.all_task)
+    val undoText = stringResource(id = R.string.undo)
+    val okText = stringResource(id = R.string.ok)
 
     LaunchedEffect(key1 = action) {
         if (action != Action.NO_ACTION) {
             scope.launch {
                 val snackBarResult = scaffoldState.snackbarHostState.showSnackbar(
-                    message = "${action.name.substring(0, 1).toUpperCase(Locale.getDefault()) + action.name.substring(1).toLowerCase(Locale.getDefault())}: $taskTitle",
-                    actionLabel = setActionLabel(action = action)
+                    message = setMessage(action, taskTitle, string),
+                    actionLabel = setActionLabel(action, undoText, okText)
                 )
                 undoDeleteTask(
                     action = action,
@@ -127,12 +145,24 @@ fun DisplaySnackBar(
                     onUndoClicked = onUndoClicked
                 )
             }
+            onComplete(Action.NO_ACTION)
         }
     }
 }
 
-private fun setActionLabel(action: Action): String {
-    return if (action.name == "DELETE") "UNDO" else "OK"
+private fun setMessage(
+    action: Action,
+    taskTitle: String,
+    string: String
+): String {
+    return when (action) {
+        Action.DELETE_ALL -> string
+        else -> "${action.name.substring(0, 1).toUpperCase(Locale.getDefault()) + action.name.substring(1).toLowerCase(Locale.getDefault())}: $taskTitle"
+    }
+}
+
+private fun setActionLabel(action: Action, undoText: String, okText: String): String {
+    return if (action.name == "DELETE") undoText else okText
 }
 
 private fun undoDeleteTask(

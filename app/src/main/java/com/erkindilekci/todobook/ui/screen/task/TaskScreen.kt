@@ -3,10 +3,13 @@ package com.erkindilekci.todobook.ui.screen.task
 import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.erkindilekci.todobook.R
@@ -28,6 +31,10 @@ fun TaskScreen(
 
     val context = LocalContext.current
     val text = stringResource(id = R.string.fields)
+
+    BackHandler {
+        navigateToListScreen(Action.NO_ACTION)
+    }
 
     Scaffold(
         topBar = {

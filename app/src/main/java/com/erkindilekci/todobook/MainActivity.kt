@@ -3,6 +3,7 @@ package com.erkindilekci.todobook
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -15,20 +16,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.rememberNavController
 import com.erkindilekci.todobook.navigation.SetupNavigation
 import com.erkindilekci.todobook.ui.theme.ToDoBookTheme
 import com.erkindilekci.todobook.ui.viewmodel.SharedViewModel
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
+@OptIn(ExperimentalAnimationApi::class)
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ToDoBookTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    val navController = rememberNavController()
+                    //val navController = rememberNavController()
+                    val navController = rememberAnimatedNavController()
                     val sharedViewModel: SharedViewModel = hiltViewModel()
 
                     SetupNavigation(

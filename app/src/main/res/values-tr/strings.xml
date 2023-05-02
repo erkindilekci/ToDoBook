@@ -1,0 +1,30 @@
+<resources>
+
+    <string name="app_name">Yapılacaklar Kitabı</string>
+    <string name="add">Ekle</string>
+    <string name="tasks">Görevler</string>
+    <string name="search">Ara</string>
+    <string name="filter">Filtrele</string>
+    <string name="delete_all">Tümünü Sil</string>
+    <string name="delete">Sil</string>
+    <string name="clear">Temizle</string>
+    <string name="add_task">Lütfen görev ekleyin.</string>
+    <string name="empty_screen_icon">Üzgün Yüz</string>
+    <string name="app_bar_task">Görev Ekle</string>
+    <string name="back">Geri</string>
+    <string name="close">Kapat</string>
+    <string name="update">Güncelle</string>
+    <string name="arrow_down">Aşağı Ok</string>
+    <string name="title">Başlık</string>
+    <string name="description">Açıklama</string>
+    <string name="max_character">Başlık girin (maks. 28 karakter)</string>
+    <string name="fields">Alan(lar) boş!</string>
+    <string name="all_task">Tüm görevler silindi.</string>
+    <string name="ok">Tamam</string>
+    <string name="undo">GERİ AL</string>
+    <string name="no">Hayır</string>
+    <string name="yes">Evet</string>
+    <string name="sure_all">Tüm görevleri silmek istediğinize emin misiniz?</string>
+    <string name="delete_task">Sil: \"%1$s\"</string>
+    <string name="sure">Silmek istediğine emin misin \"%1$s\"?</string>
+</resources>

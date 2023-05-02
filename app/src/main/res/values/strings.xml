@@ -17,6 +17,13 @@
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="max_character">Enter title (max 28 characters)"</string>
-    <string name="fields">Field(s) Empty!"</string>
-
+    <string name="fields">Field(s) Empty!</string>
+    <string name="all_task">All Tasks Removed.</string>
+    <string name="ok">OK</string>
+    <string name="undo">UNDO</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="sure_all">Are you sure you want to delete all tasks?</string>
+    <string name="delete_task">Delete \"%1$s\"</string>
+    <string name="sure">Are you sure you want to delete \"%1$s\"?</string>
 </resources>
