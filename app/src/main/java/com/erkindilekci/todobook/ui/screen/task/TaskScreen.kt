@@ -25,9 +25,9 @@ fun TaskScreen(
     sharedViewModel: SharedViewModel,
     selectedTask: TodoTask?
 ) {
-    val title: String by sharedViewModel.title
-    val description: String by sharedViewModel.description
-    val priority: Priority by sharedViewModel.priority
+    val title: String = sharedViewModel.title
+    val description: String = sharedViewModel.description
+    val priority: Priority = sharedViewModel.priority
 
     val context = LocalContext.current
     val text = stringResource(id = R.string.fields)
@@ -43,9 +43,9 @@ fun TaskScreen(
                 navigateToListScreen = { action ->
                     if (action == Action.NO_ACTION) {
                         navigateToListScreen(action)
-                    } else if (action == Action.DELETE){
+                    } else if (action == Action.DELETE) {
                         navigateToListScreen(action)
-                    }else {
+                    } else {
                         if (sharedViewModel.validateFields()) {
                             navigateToListScreen(action)
                         } else {
@@ -61,9 +61,9 @@ fun TaskScreen(
                 title = title,
                 onTitleChange = { sharedViewModel.updateTitle(it) },
                 description = description,
-                onDescriptionChange = { sharedViewModel.description.value = it },
+                onDescriptionChange = { sharedViewModel.updateDescription(it) },
                 priority = priority,
-                onPrioritySelected = { sharedViewModel.priority.value = it }
+                onPrioritySelected = { sharedViewModel.updatePriority(it) }
             )
 
 

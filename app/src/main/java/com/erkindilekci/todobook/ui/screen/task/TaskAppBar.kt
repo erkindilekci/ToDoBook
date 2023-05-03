@@ -26,7 +26,7 @@ fun TaskAppBar(
     navigateToListScreen: (Action) -> Unit,
     selectedTask: TodoTask?
 ) {
-    if (selectedTask  == null){
+    if (selectedTask == null) {
         NewTaskAppBar(navigateToListScreen = navigateToListScreen)
     } else {
         ExistingTaskAppBar(selectedTask = selectedTask, navigateToListScreen = navigateToListScreen)
@@ -53,7 +53,11 @@ fun BackAction(
     onBackClicked: (Action) -> Unit
 ) {
     IconButton(onClick = { onBackClicked(Action.NO_ACTION) }) {
-        Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = stringResource(id = R.string.back), tint = Color.White)
+        Icon(
+            imageVector = Icons.Filled.ArrowBack,
+            contentDescription = stringResource(id = R.string.back),
+            tint = Color.White
+        )
     }
 }
 
@@ -62,7 +66,10 @@ fun AddAction(
     onAddClicked: (Action) -> Unit
 ) {
     IconButton(onClick = { onAddClicked(Action.ADD) }) {
-        Icon(imageVector = Icons.Filled.Check, contentDescription = stringResource(id = R.string.back), tint = Color.White
+        Icon(
+            imageVector = Icons.Filled.Check,
+            contentDescription = stringResource(id = R.string.back),
+            tint = Color.White
         )
     }
 }
@@ -97,7 +104,7 @@ fun Actions(
         closeDialog = { openDialog = false },
         onYesClicked = { navigateToListScreen(Action.DELETE) }
     )
-    
+
     DeleteAction(onDeleteClicked = { openDialog = true })
     UpdateAction(onUpdateClicked = navigateToListScreen)
 }
@@ -107,7 +114,11 @@ fun CloseAction(
     onCloseClicked: (Action) -> Unit
 ) {
     IconButton(onClick = { onCloseClicked(Action.NO_ACTION) }) {
-        Icon(imageVector = Icons.Filled.Close, contentDescription = stringResource(id = R.string.close), tint = Color.White)
+        Icon(
+            imageVector = Icons.Filled.Close,
+            contentDescription = stringResource(id = R.string.close),
+            tint = Color.White
+        )
     }
 }
 
@@ -116,7 +127,11 @@ fun DeleteAction(
     onDeleteClicked: () -> Unit
 ) {
     IconButton(onClick = { onDeleteClicked() }) {
-        Icon(imageVector = Icons.Filled.Delete, contentDescription = stringResource(id = R.string.delete), tint = Color.White)
+        Icon(
+            imageVector = Icons.Filled.Delete,
+            contentDescription = stringResource(id = R.string.delete),
+            tint = Color.White
+        )
     }
 }
 
@@ -125,6 +140,10 @@ fun UpdateAction(
     onUpdateClicked: (Action) -> Unit
 ) {
     IconButton(onClick = { onUpdateClicked(Action.UPDATE) }) {
-        Icon(imageVector = Icons.Filled.Check, contentDescription = stringResource(id = R.string.update), tint = Color.White)
+        Icon(
+            imageVector = Icons.Filled.Check,
+            contentDescription = stringResource(id = R.string.update),
+            tint = Color.White
+        )
     }
 }

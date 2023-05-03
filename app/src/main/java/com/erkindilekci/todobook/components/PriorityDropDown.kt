@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.Composable
@@ -19,8 +20,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.erkindilekci.todobook.R
 import com.erkindilekci.todobook.data.models.Priority
@@ -34,9 +38,12 @@ fun PriorityDropDown(
     var isExpanded by rememberSaveable { mutableStateOf(false) }
     val angle: Float by animateFloatAsState(targetValue = if (isExpanded) 180f else 0f)
 
+    var parentSize by remember { mutableStateOf(IntSize.Zero) }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .onGloballyPositioned { parentSize = it.size }
             //.background(if (isSystemInDarkTheme()) BackgroundDark else Background)
             //.background(Background)
             .height(60.dp)
@@ -65,33 +72,18 @@ fun PriorityDropDown(
         }
         
         DropdownMenu(expanded = isExpanded, onDismissRequest = { isExpanded = false }, modifier = Modifier
-            .fillMaxWidth(fraction = 0.94f)
+            //.fillMaxWidth(fraction = 0.94f)
+            .width(with(LocalDensity.current) { parentSize.width.toDp() })
             //.background(if (isSystemInDarkTheme()) BackgroundDark else Background)
             .background(Background)
         ) {
-            DropdownMenuItem(onClick = {
-                isExpanded = false
-                onPrioritySelected(Priority.LOW)
-            }) {
-                PriorityItem(priority = Priority.LOW)
-            }
-
-            //Divider(thickness = 0.3.dp, modifier = Modifier.fillMaxWidth())
-
-            DropdownMenuItem(onClick = {
-                isExpanded = false
-                onPrioritySelected(Priority.MEDIUM)
-            }) {
-                PriorityItem(priority = Priority.MEDIUM)
-            }
-
-            //Divider(thickness = 0.3.dp, modifier = Modifier.fillMaxWidth())
-
-            DropdownMenuItem(onClick = {
-                isExpanded = false
-                onPrioritySelected(Priority.HIGH)
-            }) {
-                PriorityItem(priority = Priority.HIGH)
+            Priority.values().slice(0..2).forEach {
+                DropdownMenuItem(onClick = {
+                    isExpanded = false
+                    onPrioritySelected(it)
+                }) {
+                    PriorityItem(priority = it)
+                }
             }
         }
     }

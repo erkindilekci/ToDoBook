@@ -1,6 +1,5 @@
 package com.erkindilekci.todobook.navigation
 
-//import androidx.navigation.compose.composable
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
@@ -47,10 +46,10 @@ fun SetupNavigation(
         }
 
         composable(
-            route = LIST_SCREEN,
-            arguments = listOf(navArgument(LIST_ARGUMENT_KEY){
-                type = NavType.StringType
-            }),
+                route = LIST_SCREEN,
+                arguments = listOf(navArgument(LIST_ARGUMENT_KEY){
+                    type = NavType.StringType
+                }),
             exitTransition = {
                 slideOutHorizontally(
                     targetOffsetX = { -it },
@@ -65,11 +64,11 @@ fun SetupNavigation(
             LaunchedEffect(key1 = myAction) {
                 if (action != myAction) {
                     myAction = action
-                    sharedViewModel.action.value = action
+                    sharedViewModel.updateAction(action)
                 }
             }
 
-            val databaseAction by sharedViewModel.action
+            val databaseAction = sharedViewModel.action
 
             ListScreen(navigateToTaskScreen = screen.list, sharedViewModel = sharedViewModel, action = databaseAction)
         }

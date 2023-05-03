@@ -38,18 +38,18 @@ fun ListAppBar(
     when (searchAppBarState) {
         SearchAppBarState.CLOSED -> {
             DefaultListAppBar(
-                onSearchClicked = { sharedViewModel.searchAppBarState.value = SearchAppBarState.OPENED },
+                onSearchClicked = { sharedViewModel.updateSearchAppState(SearchAppBarState.OPENED) },
                 onFilterClicked = { sharedViewModel.persistFilterState(it) },
-                onDeleteAllConfirmed = { sharedViewModel.action.value = Action.DELETE_ALL }
+                onDeleteAllConfirmed = { sharedViewModel.updateAction(Action.DELETE_ALL) }
             )
         }
         else -> {
             SearchAppBar(
                 text = searchTextState,
-                onTextChange = { sharedViewModel.searchTextState.value = it },
+                onTextChange = { sharedViewModel.updateSearchText(it) },
                 onCloseClicked = {
-                    sharedViewModel.searchAppBarState.value = SearchAppBarState.CLOSED
-                    sharedViewModel.searchTextState.value = ""
+                    sharedViewModel.updateSearchAppState(SearchAppBarState.CLOSED)
+                    sharedViewModel.updateSearchText("")
                 },
                 onSearchClicked = { sharedViewModel.searchDatabase(it) }
             )
@@ -84,7 +84,7 @@ fun ListAppBarActions(
     onDeleteAllConfirmed: () -> Unit
 ) {
     var openDialog by remember { mutableStateOf(false) }
-    
+
     DisplayAlertDialog(
         title = stringResource(id = R.string.delete_all),
         message = stringResource(id = R.string.sure_all),
@@ -129,32 +129,13 @@ fun SortAction(
             onDismissRequest = { isExpanded = false },
             Modifier.background(Background)
         ) {
-            DropdownMenuItem(onClick = {
-                isExpanded = false
-                onFilterClicked(Priority.HIGH)
-            }) {
-                PriorityItem(priority = Priority.HIGH)
-            }
-
-            DropdownMenuItem(onClick = {
-                isExpanded = false
-                onFilterClicked(Priority.MEDIUM)
-            }) {
-                PriorityItem(priority = Priority.MEDIUM)
-            }
-
-            DropdownMenuItem(onClick = {
-                isExpanded = false
-                onFilterClicked(Priority.LOW)
-            }) {
-                PriorityItem(priority = Priority.LOW)
-            }
-
-            DropdownMenuItem(onClick = {
-                isExpanded = false
-                onFilterClicked(Priority.NONE)
-            }) {
-                PriorityItem(priority = Priority.NONE)
+            Priority.values().forEach {
+                DropdownMenuItem(onClick = {
+                    isExpanded = false
+                    onFilterClicked(it)
+                }) {
+                    PriorityItem(priority = it)
+                }
             }
         }
     }
