@@ -1,5 +1,6 @@
 package com.erkindilekci.todobook.ui.viewmodel
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -17,7 +18,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,8 +25,6 @@ class SharedViewModel @Inject constructor(
     private val repository: ToDoRepository,
     private val dataStoreRepository: DataStoreRepository
 ) : ViewModel() {
-
-    var isLoading by mutableStateOf(true)
 
     var id by mutableStateOf(0)
         private set
@@ -89,7 +87,6 @@ class SharedViewModel @Inject constructor(
         } catch (e: Exception) {
             _allTasks.value = RequestState.Error(e)
         }
-        //isLoading = false
     }
 
     fun getSelectedTask(taskId: Int) {
@@ -144,22 +141,12 @@ class SharedViewModel @Inject constructor(
 
     fun handleDatabaseActions(action: Action) {
         when (action) {
-            Action.ADD -> {
-                addTask()
-            }
-            Action.UPDATE -> {
-                updateTask()
-            }
-            Action.DELETE -> {
-                deleteTask()
-            }
-            Action.DELETE_ALL -> {
-                deleteAllTasks()
-            }
-            Action.UNDO -> {
-                addTask()
-            }
-            else -> {}
+            Action.ADD -> { addTask() }
+            Action.UPDATE -> { updateTask() }
+            Action.DELETE -> { deleteTask() }
+            Action.DELETE_ALL -> { deleteAllTasks() }
+            Action.UNDO -> { addTask() }
+            else -> {  }
         }
     }
 

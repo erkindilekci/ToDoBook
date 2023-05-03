@@ -10,11 +10,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.erkindilekci.todobook.ui.screen.list.ListScreen
+import com.erkindilekci.todobook.ui.screen.splash.SplashScreen
 import com.erkindilekci.todobook.ui.screen.task.TaskScreen
 import com.erkindilekci.todobook.ui.viewmodel.SharedViewModel
 import com.erkindilekci.todobook.util.Action
 import com.erkindilekci.todobook.util.Constants.LIST_ARGUMENT_KEY
 import com.erkindilekci.todobook.util.Constants.LIST_SCREEN
+import com.erkindilekci.todobook.util.Constants.SPLASH_SCREEN
 import com.erkindilekci.todobook.util.Constants.TASK_ARGUMENT_KEY
 import com.erkindilekci.todobook.util.Constants.TASK_SCREEN
 import com.erkindilekci.todobook.util.toAction
@@ -30,8 +32,8 @@ fun SetupNavigation(
 ) {
     val screen = Screens(navController)
 
-    AnimatedNavHost(navController = navController, startDestination = LIST_SCREEN) {
-        /*composable(
+    AnimatedNavHost(navController = navController, startDestination = SPLASH_SCREEN) {
+        composable(
             route = SPLASH_SCREEN,
             exitTransition = {
                 slideOutHorizontally(
@@ -41,7 +43,7 @@ fun SetupNavigation(
             }
         ){
             SplashScreen(navigateToListScreen = screen.splash)
-        }*/
+        }
 
         composable(
                 route = LIST_SCREEN,

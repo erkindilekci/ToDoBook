@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="Theme.ToDoBook.MySplashScreen." parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">#F6F6F6</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/f30</item>
-        <item name="postSplashScreenTheme">@style/Theme.ToDoBook</item>
-    </style>
-</resources>

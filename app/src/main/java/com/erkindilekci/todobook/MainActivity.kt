@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.erkindilekci.todobook.navigation.SetupNavigation
 import com.erkindilekci.todobook.ui.theme.ToDoBookTheme
@@ -26,23 +25,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 @OptIn(ExperimentalAnimationApi::class)
 class MainActivity : ComponentActivity() {
-
-    private lateinit var sharedViewModel: SharedViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen().apply {
-            setKeepOnScreenCondition{
-                sharedViewModel.isLoading
-            }
-        }
         setContent {
             ToDoBookTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     //val navController = rememberNavController()
                     val navController = rememberAnimatedNavController()
-                    //val sharedViewModel: SharedViewModel = hiltViewModel()
-                    sharedViewModel = hiltViewModel()
+                    val sharedViewModel: SharedViewModel = hiltViewModel()
 
                     SetupNavigation(
                         navController = navController,

@@ -22,7 +22,6 @@ import com.erkindilekci.todobook.R
 import com.erkindilekci.todobook.ui.theme.Background
 import kotlinx.coroutines.delay
 
-/*
 @Composable
 fun SplashScreen(
     navigateToListScreen: () -> Unit
@@ -50,4 +49,4 @@ fun SplashScreen(
             contentDescription = "logo"
         )
     }
-}*/
+}
