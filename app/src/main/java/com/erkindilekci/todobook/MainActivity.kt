@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.erkindilekci.todobook.navigation.SetupNavigation
 import com.erkindilekci.todobook.ui.theme.ToDoBookTheme
@@ -27,6 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         setContent {
             ToDoBookTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
@@ -44,6 +46,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/*
 @Composable
 fun MyTextField() {
     Column(
@@ -121,4 +124,4 @@ fun MyTextField2() {
 @Composable
 fun d() {
     MyTextField2()
-}
+}*/

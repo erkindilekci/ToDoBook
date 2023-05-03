@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.ToDoBook.MySplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/my_backround</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/transparent</item>
+        <item name="postSplashScreenTheme">@style/Theme.ToDoBook</item>
+    </style>
+</resources>
