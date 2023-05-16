@@ -34,6 +34,7 @@ class SharedViewModel @Inject constructor(
         private set
     var priority by mutableStateOf(Priority.LOW)
         private set
+    var isDone by mutableStateOf(false)
 
     var action by mutableStateOf(Action.NO_ACTION)
         private set
@@ -102,7 +103,8 @@ class SharedViewModel @Inject constructor(
             val newToDoTask = TodoTask(
                 title = title,
                 description = description,
-                priority = priority
+                priority = priority,
+                isDone = isDone
             )
             repository.addTask(newToDoTask)
         }
@@ -115,7 +117,8 @@ class SharedViewModel @Inject constructor(
                 id = id,
                 title = title,
                 description = description,
-                priority = priority
+                priority = priority,
+                isDone = isDone
             )
             repository.updateTask(newToDoTask)
         }
@@ -127,7 +130,8 @@ class SharedViewModel @Inject constructor(
                 id = id,
                 title = title,
                 description = description,
-                priority = priority
+                priority = priority,
+                isDone = isDone
             )
             repository.deleteTask(newToDoTask)
         }
@@ -196,7 +200,7 @@ class SharedViewModel @Inject constructor(
         )
 
     val nonePriorityTasks: StateFlow<List<TodoTask>> =
-        repository.sortByLowPriority.stateIn(
+        repository.sortByHighPriority.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
             emptyList()
@@ -241,5 +245,11 @@ class SharedViewModel @Inject constructor(
 
     fun updateSearchText(newText: String) {
         searchTextState = newText
+    }
+
+    fun updateIsDone(newBoolean: Boolean, todoId: Int) {
+        viewModelScope.launch {
+            repository.updateIsDone(newBoolean, todoId)
+        }
     }
 }   

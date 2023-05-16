@@ -12,7 +12,7 @@ class ToDoRepository @Inject constructor(
 ){
     val getAllTasks: Flow<List<TodoTask>> = toDoDao.getAllTasks()
     val sortByLowPriority: Flow<List<TodoTask>> = toDoDao.sortByLowPriority()
-    //val sortByHighPriority: Flow<List<TodoTask>> = toDoDao.sortByHighPriority()
+    val sortByHighPriority: Flow<List<TodoTask>> = toDoDao.sortByHighPriority()
 
     fun getSelectedTask(taskId: Int): Flow<TodoTask> {
         return toDoDao.getSelectedTask(taskId)
@@ -48,5 +48,9 @@ class ToDoRepository @Inject constructor(
 
     fun getHighPriorityTasks(): Flow<List<TodoTask>> {
         return toDoDao.getHighPriorityTasks()
+    }
+
+    suspend fun updateIsDone(newBoolean: Boolean, todoId: Int) {
+        return toDoDao.updateTaskIsDone(newBoolean, todoId)
     }
 }

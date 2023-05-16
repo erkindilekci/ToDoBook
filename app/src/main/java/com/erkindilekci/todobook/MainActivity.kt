@@ -21,6 +21,7 @@ import com.erkindilekci.todobook.navigation.SetupNavigation
 import com.erkindilekci.todobook.ui.theme.ToDoBookTheme
 import com.erkindilekci.todobook.ui.viewmodel.SharedViewModel
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.google.android.gms.ads.MobileAds
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,6 +30,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
+        MobileAds.initialize(this) {}
         setContent {
             ToDoBookTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {

@@ -103,6 +103,9 @@ fun ListScreen(
         },
         floatingActionButton = {
             MyFabButton(onFabClicked = navigateToTaskScreen)
+        },
+        bottomBar = {
+            //ListBannerAdView()
         }
     )
 }

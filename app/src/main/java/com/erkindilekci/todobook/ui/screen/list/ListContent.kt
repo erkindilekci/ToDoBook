@@ -25,13 +25,12 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.erkindilekci.todobook.R
 import com.erkindilekci.todobook.data.models.Priority
 import com.erkindilekci.todobook.data.models.TodoTask
-import com.erkindilekci.todobook.ui.theme.Background
-import com.erkindilekci.todobook.ui.theme.CheckedText
-import com.erkindilekci.todobook.ui.theme.HighPriorityColor
-import com.erkindilekci.todobook.ui.theme.TextColor
+import com.erkindilekci.todobook.ui.theme.*
+import com.erkindilekci.todobook.ui.viewmodel.SharedViewModel
 import com.erkindilekci.todobook.util.Action
 import com.erkindilekci.todobook.util.RequestState
 import com.erkindilekci.todobook.util.SearchAppBarState
@@ -95,6 +94,7 @@ fun ListContent(
         }
     }
 }
+
 @Composable
 fun HandleListContent(
     tasks: List<TodoTask>,
@@ -156,7 +156,12 @@ fun DisplayTasks(
                     directions = setOf(DismissDirection.EndToStart),
                     dismissThresholds = { FractionalThreshold(0.2f) },
                     background = { RedBackground(degrees = degrees) },
-                    dismissContent = { TodoItem(todoTask = it, navigateToTaskScreen = navigateToTaskScreen) }
+                    dismissContent = {
+                        TodoItem(
+                            todoTask = it,
+                            navigateToTaskScreen = navigateToTaskScreen
+                        )
+                    }
                 )
             }
         }
@@ -165,10 +170,11 @@ fun DisplayTasks(
 
 @Composable
 fun RedBackground(degrees: Float) {
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(HighPriorityColor)
-        .padding(horizontal = 24.dp),
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(HighPriorityColor)
+            .padding(horizontal = 24.dp),
         contentAlignment = Alignment.CenterEnd
     ) {
         Icon(
@@ -183,10 +189,9 @@ fun RedBackground(degrees: Float) {
 @Composable
 fun TodoItem(
     todoTask: TodoTask,
-    navigateToTaskScreen: (taskId: Int) -> Unit
+    navigateToTaskScreen: (taskId: Int) -> Unit,
+    viewModel: SharedViewModel = hiltViewModel()
 ) {
-    var isChecked by rememberSaveable { mutableStateOf(false) }
-
     Column(modifier = Modifier
         .clickable {
             navigateToTaskScreen(todoTask.id)
@@ -206,9 +211,9 @@ fun TodoItem(
                 Text(
                     text = todoTask.title,
                     fontWeight = FontWeight.SemiBold,
-                    color = if (isChecked) CheckedText else TextColor,
+                    color = if (todoTask.isDone) CheckedText else TextColor,
                     //color = TextColor,
-                    textDecoration = if (isChecked) TextDecoration.LineThrough else TextDecoration.None,
+                    textDecoration = if (todoTask.isDone) TextDecoration.LineThrough else TextDecoration.None,
                     fontSize = 20.sp,
                     style = MaterialTheme.typography.h5,
                     modifier = Modifier.padding(bottom = 4.dp),
@@ -217,10 +222,10 @@ fun TodoItem(
                 Text(
                     text = todoTask.description,
                     fontSize = 18.sp,
-                    color = if (isChecked) CheckedText else TextColor,
+                    color = if (todoTask.isDone) CheckedText else TextColor,
                     //color = TextColor,
                     //modifier = Modifier.padding(bottom = 4.dp),
-                    textDecoration = if (isChecked) TextDecoration.LineThrough else TextDecoration.None,
+                    textDecoration = if (todoTask.isDone) TextDecoration.LineThrough else TextDecoration.None,
                     style = MaterialTheme.typography.subtitle1,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
@@ -239,21 +244,23 @@ fun TodoItem(
                         .background(todoTask.priority.color, CircleShape)
                 )
 
-                /*Checkbox(
-                    checked = isChecked,
-                    onCheckedChange = { isChecked = !isChecked },
+                Checkbox(
+                    checked = todoTask.isDone,
+                    onCheckedChange = {
+                        viewModel.updateIsDone(it, todoTask.id)
+                    },
                     colors = CheckboxDefaults.colors(
                         checkedColor = AppBar,
                         checkmarkColor = Color.White
                     )
-                )*/
-                Spacer(modifier = Modifier.height(5.dp))
+                )
+                /*Spacer(modifier = Modifier.height(5.dp))
 
                 Text(
                     text = todoTask.priority.name,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 14.sp
-                )
+                )*/
             }
         }
 

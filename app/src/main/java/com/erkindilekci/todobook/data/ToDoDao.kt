@@ -12,7 +12,7 @@ interface ToDoDao {
     @Query("SELECT * FROM todo_table WHERE id=:taskId")
     fun getSelectedTask(taskId: Int): Flow<TodoTask>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addTask(todoTask: TodoTask)
 
     @Update
@@ -41,4 +41,7 @@ interface ToDoDao {
 
     @Query("SELECT * FROM todo_table WHERE priority LIKE 'H%'")
     fun getHighPriorityTasks(): Flow<List<TodoTask>>
+
+    @Query("UPDATE todo_table SET isDone =:newBoolean WHERE id=:todoId")
+    suspend fun updateTaskIsDone(newBoolean: Boolean, todoId: Int)
 }

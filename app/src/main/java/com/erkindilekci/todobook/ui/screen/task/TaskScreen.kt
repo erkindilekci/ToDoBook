@@ -67,6 +67,9 @@ fun TaskScreen(
             )
 
 
+        },
+        bottomBar = {
+            //TaskBannerAdView()
         }
     )
 }
