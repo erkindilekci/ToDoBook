@@ -1,4 +1,4 @@
-package com.erkindilekci.todobook.ui.theme
+package com.erkindilekci.todobook.presentation.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

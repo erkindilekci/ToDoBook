@@ -1,6 +1,5 @@
-package com.erkindilekci.todobook.ui.viewmodel
+package com.erkindilekci.todobook.presentation.viewmodel
 
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -16,7 +15,11 @@ import com.erkindilekci.todobook.util.RequestState
 import com.erkindilekci.todobook.util.SearchAppBarState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -145,12 +148,27 @@ class SharedViewModel @Inject constructor(
 
     fun handleDatabaseActions(action: Action) {
         when (action) {
-            Action.ADD -> { addTask() }
-            Action.UPDATE -> { updateTask() }
-            Action.DELETE -> { deleteTask() }
-            Action.DELETE_ALL -> { deleteAllTasks() }
-            Action.UNDO -> { addTask() }
-            else -> {  }
+            Action.ADD -> {
+                addTask()
+            }
+
+            Action.UPDATE -> {
+                updateTask()
+            }
+
+            Action.DELETE -> {
+                deleteTask()
+            }
+
+            Action.DELETE_ALL -> {
+                deleteAllTasks()
+            }
+
+            Action.UNDO -> {
+                addTask()
+            }
+
+            else -> {}
         }
     }
 
@@ -252,4 +270,4 @@ class SharedViewModel @Inject constructor(
             repository.updateIsDone(newBoolean, todoId)
         }
     }
-}   
+}

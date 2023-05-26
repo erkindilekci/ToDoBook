@@ -9,10 +9,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.erkindilekci.todobook.ui.screen.list.ListScreen
-import com.erkindilekci.todobook.ui.screen.splash.SplashScreen
-import com.erkindilekci.todobook.ui.screen.task.TaskScreen
-import com.erkindilekci.todobook.ui.viewmodel.SharedViewModel
+import com.erkindilekci.todobook.presentation.listscreen.ListScreen
+import com.erkindilekci.todobook.presentation.splashscreen.SplashScreen
+import com.erkindilekci.todobook.presentation.taskscreen.TaskScreen
+import com.erkindilekci.todobook.presentation.viewmodel.SharedViewModel
 import com.erkindilekci.todobook.util.Action
 import com.erkindilekci.todobook.util.Constants.LIST_ARGUMENT_KEY
 import com.erkindilekci.todobook.util.Constants.LIST_SCREEN
@@ -41,22 +41,22 @@ fun SetupNavigation(
                     animationSpec = tween(2000)
                 )
             }
-        ){
+        ) {
             SplashScreen(navigateToListScreen = screen.splash)
         }
 
         composable(
-                route = LIST_SCREEN,
-                arguments = listOf(navArgument(LIST_ARGUMENT_KEY){
-                    type = NavType.StringType
-                }),
+            route = LIST_SCREEN,
+            arguments = listOf(navArgument(LIST_ARGUMENT_KEY) {
+                type = NavType.StringType
+            }),
             exitTransition = {
                 slideOutHorizontally(
                     targetOffsetX = { -it },
                     animationSpec = tween(600)
                 )
             }
-        ){ navBackStackEntry ->
+        ) { navBackStackEntry ->
             val action = navBackStackEntry.arguments?.getString(LIST_ARGUMENT_KEY).toAction()
 
             var myAction by rememberSaveable { mutableStateOf(Action.NO_ACTION) }
@@ -70,12 +70,16 @@ fun SetupNavigation(
 
             val databaseAction = sharedViewModel.action
 
-            ListScreen(navigateToTaskScreen = screen.list, sharedViewModel = sharedViewModel, action = databaseAction)
+            ListScreen(
+                navigateToTaskScreen = screen.list,
+                sharedViewModel = sharedViewModel,
+                action = databaseAction
+            )
         }
 
         composable(
             route = TASK_SCREEN,
-            arguments = listOf(navArgument(TASK_ARGUMENT_KEY){
+            arguments = listOf(navArgument(TASK_ARGUMENT_KEY) {
                 type = NavType.IntType
             }),
             enterTransition = {
@@ -90,10 +94,10 @@ fun SetupNavigation(
                     animationSpec = tween(600)
                 )
             }
-        ){ navBackStackEntry ->
+        ) { navBackStackEntry ->
             val taskId = navBackStackEntry.arguments!!.getInt(TASK_ARGUMENT_KEY)
-            
-            LaunchedEffect(key1 = taskId){
+
+            LaunchedEffect(key1 = taskId) {
                 sharedViewModel.getSelectedTask(taskId)
             }
 
@@ -105,7 +109,11 @@ fun SetupNavigation(
                 }
             }
 
-            TaskScreen(navigateToListScreen = screen.task, sharedViewModel = sharedViewModel, selectedTask = selectedTask)
+            TaskScreen(
+                navigateToListScreen = screen.task,
+                sharedViewModel = sharedViewModel,
+                selectedTask = selectedTask
+            )
 
         }
     }

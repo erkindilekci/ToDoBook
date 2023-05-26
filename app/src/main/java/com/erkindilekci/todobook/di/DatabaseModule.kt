@@ -36,6 +36,3 @@ object DatabaseModule {
     @Provides
     fun provideDao(database: ToDoDatabase) = database.toDoDao()
 }
-
-// ctrl + p icinde istedigi parametrelere bak
-// ctrl + q islevin ozelliklerine bak

@@ -1,4 +1,4 @@
-package com.erkindilekci.todobook.ui.screen.task
+package com.erkindilekci.todobook.presentation.taskscreen
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -9,16 +9,18 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import com.erkindilekci.todobook.R
-import com.erkindilekci.todobook.components.DisplayAlertDialog
-import com.erkindilekci.todobook.data.models.Priority
 import com.erkindilekci.todobook.data.models.TodoTask
-import com.erkindilekci.todobook.ui.theme.AppBar
+import com.erkindilekci.todobook.presentation.components.DisplayAlertDialog
+import com.erkindilekci.todobook.presentation.theme.AppBar
 import com.erkindilekci.todobook.util.Action
 
 @Composable

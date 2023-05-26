@@ -9,7 +9,7 @@ import javax.inject.Inject
 @ViewModelScoped
 class ToDoRepository @Inject constructor(
     private val toDoDao: ToDoDao
-){
+) {
     val getAllTasks: Flow<List<TodoTask>> = toDoDao.getAllTasks()
     val sortByLowPriority: Flow<List<TodoTask>> = toDoDao.sortByLowPriority()
     val sortByHighPriority: Flow<List<TodoTask>> = toDoDao.sortByHighPriority()
@@ -21,7 +21,7 @@ class ToDoRepository @Inject constructor(
     suspend fun addTask(todoTask: TodoTask) {
         toDoDao.addTask(todoTask)
     }
-    
+
     suspend fun updateTask(todoTask: TodoTask) {
         toDoDao.updateTask(todoTask)
     }

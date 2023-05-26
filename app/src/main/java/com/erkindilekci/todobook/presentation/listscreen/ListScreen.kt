@@ -1,25 +1,37 @@
-package com.erkindilekci.todobook.ui.screen.list
+package com.erkindilekci.todobook.presentation.listscreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.ExtendedFloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.Snackbar
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarResult
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.*
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.erkindilekci.todobook.R
-import com.erkindilekci.todobook.ui.theme.AppBar
-import com.erkindilekci.todobook.ui.theme.Background
-import com.erkindilekci.todobook.ui.theme.FabColor
-import com.erkindilekci.todobook.ui.viewmodel.SharedViewModel
+import com.erkindilekci.todobook.presentation.theme.AppBar
+import com.erkindilekci.todobook.presentation.theme.Background
+import com.erkindilekci.todobook.presentation.theme.FabColor
+import com.erkindilekci.todobook.presentation.viewmodel.SharedViewModel
 import com.erkindilekci.todobook.util.Action
 import com.erkindilekci.todobook.util.SearchAppBarState
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Locale
 
 @Composable
 fun ListScreen(
@@ -74,14 +86,7 @@ fun ListScreen(
                 modifier = Modifier
                     .padding(it)
                     .fillMaxSize()
-                    .background(
-                        /*brush = Brush.verticalGradient(
-                            colors = listOf(AppBar, Color.White),
-                            startY = -600f,
-                            endY = 2500f
-                        )*/
-                        color = Background
-                    )
+                    .background(color = Background)
             ) {
                 ListContent(
                     allTasks = allTasks,
@@ -103,9 +108,6 @@ fun ListScreen(
         },
         floatingActionButton = {
             MyFabButton(onFabClicked = navigateToTaskScreen)
-        },
-        bottomBar = {
-            //ListBannerAdView()
         }
     )
 }
@@ -160,7 +162,10 @@ private fun setMessage(
 ): String {
     return when (action) {
         Action.DELETE_ALL -> string
-        else -> "${action.name.substring(0, 1).toUpperCase(Locale.getDefault()) + action.name.substring(1).toLowerCase(Locale.getDefault())}: $taskTitle"
+        else -> "${
+            action.name.substring(0, 1).toUpperCase(Locale.getDefault()) + action.name.substring(1)
+                .toLowerCase(Locale.getDefault())
+        }: $taskTitle"
     }
 }
 
@@ -173,5 +178,7 @@ private fun undoDeleteTask(
     snackBarResult: SnackbarResult,
     onUndoClicked: (Action) -> Unit,
 ) {
-    if (snackBarResult == SnackbarResult.ActionPerformed && action == Action.DELETE) onUndoClicked(Action.UNDO)
+    if (snackBarResult == SnackbarResult.ActionPerformed && action == Action.DELETE) onUndoClicked(
+        Action.UNDO
+    )
 }

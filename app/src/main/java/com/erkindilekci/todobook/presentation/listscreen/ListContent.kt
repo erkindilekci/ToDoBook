@@ -1,4 +1,4 @@
-package com.erkindilekci.todobook.ui.screen.list
+package com.erkindilekci.todobook.presentation.listscreen
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.*
@@ -14,7 +14,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -29,8 +28,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.erkindilekci.todobook.R
 import com.erkindilekci.todobook.data.models.Priority
 import com.erkindilekci.todobook.data.models.TodoTask
-import com.erkindilekci.todobook.ui.theme.*
-import com.erkindilekci.todobook.ui.viewmodel.SharedViewModel
+import com.erkindilekci.todobook.presentation.theme.*
+import com.erkindilekci.todobook.presentation.viewmodel.SharedViewModel
 import com.erkindilekci.todobook.util.Action
 import com.erkindilekci.todobook.util.RequestState
 import com.erkindilekci.todobook.util.SearchAppBarState
@@ -61,6 +60,7 @@ fun ListContent(
                     )
                 }
             }
+
             filterState.data == Priority.NONE -> {
                 if (allTasks is RequestState.Success) {
                     HandleListContent(
@@ -70,6 +70,7 @@ fun ListContent(
                     )
                 }
             }
+
             filterState.data == Priority.LOW -> {
                 HandleListContent(
                     tasks = lowPriorityTasks,
@@ -77,6 +78,7 @@ fun ListContent(
                     onSwipeToDelete = onSwipeToDelete
                 )
             }
+
             filterState.data == Priority.MEDIUM -> {
                 HandleListContent(
                     tasks = mediumPriorityTasks,
@@ -84,6 +86,7 @@ fun ListContent(
                     onSwipeToDelete = onSwipeToDelete
                 )
             }
+
             filterState.data == Priority.HIGH -> {
                 HandleListContent(
                     tasks = highPriorityTasks,
@@ -212,7 +215,6 @@ fun TodoItem(
                     text = todoTask.title,
                     fontWeight = FontWeight.SemiBold,
                     color = if (todoTask.isDone) CheckedText else TextColor,
-                    //color = TextColor,
                     textDecoration = if (todoTask.isDone) TextDecoration.LineThrough else TextDecoration.None,
                     fontSize = 20.sp,
                     style = MaterialTheme.typography.h5,
@@ -223,8 +225,6 @@ fun TodoItem(
                     text = todoTask.description,
                     fontSize = 18.sp,
                     color = if (todoTask.isDone) CheckedText else TextColor,
-                    //color = TextColor,
-                    //modifier = Modifier.padding(bottom = 4.dp),
                     textDecoration = if (todoTask.isDone) TextDecoration.LineThrough else TextDecoration.None,
                     style = MaterialTheme.typography.subtitle1,
                     maxLines = 2,
@@ -254,13 +254,6 @@ fun TodoItem(
                         checkmarkColor = Color.White
                     )
                 )
-                /*Spacer(modifier = Modifier.height(5.dp))
-
-                Text(
-                    text = todoTask.priority.name,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 14.sp
-                )*/
             }
         }
 

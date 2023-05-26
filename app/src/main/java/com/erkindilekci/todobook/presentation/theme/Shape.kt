@@ -1,4 +1,4 @@
-package com.erkindilekci.todobook.ui.theme
+package com.erkindilekci.todobook.presentation.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

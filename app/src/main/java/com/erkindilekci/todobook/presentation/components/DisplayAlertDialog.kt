@@ -1,4 +1,4 @@
-package com.erkindilekci.todobook.components
+package com.erkindilekci.todobook.presentation.components
 
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.MaterialTheme
@@ -8,10 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.erkindilekci.todobook.R
-import com.erkindilekci.todobook.ui.theme.AppBar
+import com.erkindilekci.todobook.presentation.theme.AppBar
 
 @Composable
 fun DisplayAlertDialog(
@@ -24,9 +23,22 @@ fun DisplayAlertDialog(
     if (openDialog) {
         AlertDialog(
             backgroundColor = AppBar,
-            title = { Text(text = title, color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.SemiBold) },
+            title = {
+                Text(
+                    text = title,
+                    color = Color.White,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+            },
             onDismissRequest = { closeDialog() },
-            text = { Text(text = message, color = Color.White, fontSize = MaterialTheme.typography.subtitle1.fontSize) },
+            text = {
+                Text(
+                    text = message,
+                    color = Color.White,
+                    fontSize = MaterialTheme.typography.subtitle1.fontSize
+                )
+            },
             confirmButton = {
                 TextButton(onClick = {
                     onYesClicked()

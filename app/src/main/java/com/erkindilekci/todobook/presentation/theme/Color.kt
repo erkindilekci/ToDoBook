@@ -1,7 +1,5 @@
-package com.erkindilekci.todobook.ui.theme
+package com.erkindilekci.todobook.presentation.theme
 
-import androidx.compose.material.Colors
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 val Purple200 = Color(0xFFBB86FC)

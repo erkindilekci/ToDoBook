@@ -1,15 +1,34 @@
-package com.erkindilekci.todobook.ui.screen.list
+package com.erkindilekci.todobook.presentation.listscreen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.AppBarDefaults
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -20,12 +39,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.erkindilekci.todobook.R
-import com.erkindilekci.todobook.components.DisplayAlertDialog
-import com.erkindilekci.todobook.components.PriorityItem
 import com.erkindilekci.todobook.data.models.Priority
-import com.erkindilekci.todobook.ui.theme.AppBar
-import com.erkindilekci.todobook.ui.theme.Background
-import com.erkindilekci.todobook.ui.viewmodel.SharedViewModel
+import com.erkindilekci.todobook.presentation.components.DisplayAlertDialog
+import com.erkindilekci.todobook.presentation.components.PriorityItem
+import com.erkindilekci.todobook.presentation.theme.AppBar
+import com.erkindilekci.todobook.presentation.theme.Background
+import com.erkindilekci.todobook.presentation.viewmodel.SharedViewModel
 import com.erkindilekci.todobook.util.Action
 import com.erkindilekci.todobook.util.SearchAppBarState
 
@@ -43,6 +62,7 @@ fun ListAppBar(
                 onDeleteAllConfirmed = { sharedViewModel.updateAction(Action.DELETE_ALL) }
             )
         }
+
         else -> {
             SearchAppBar(
                 text = searchTextState,

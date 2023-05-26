@@ -1,12 +1,9 @@
-package com.erkindilekci.todobook.ui.screen.task
+package com.erkindilekci.todobook.presentation.taskscreen
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.compose.BackHandler
-import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -15,7 +12,7 @@ import androidx.compose.ui.res.stringResource
 import com.erkindilekci.todobook.R
 import com.erkindilekci.todobook.data.models.Priority
 import com.erkindilekci.todobook.data.models.TodoTask
-import com.erkindilekci.todobook.ui.viewmodel.SharedViewModel
+import com.erkindilekci.todobook.presentation.viewmodel.SharedViewModel
 import com.erkindilekci.todobook.util.Action
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -67,9 +64,6 @@ fun TaskScreen(
             )
 
 
-        },
-        bottomBar = {
-            //TaskBannerAdView()
         }
     )
 }

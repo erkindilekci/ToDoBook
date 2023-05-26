@@ -1,4 +1,4 @@
-package com.erkindilekci.todobook.ui.screen.list
+package com.erkindilekci.todobook.presentation.listscreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,11 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.erkindilekci.todobook.R
-import com.erkindilekci.todobook.ui.theme.Background
-import com.erkindilekci.todobook.ui.theme.TextColor
+import com.erkindilekci.todobook.presentation.theme.Background
+import com.erkindilekci.todobook.presentation.theme.TextColor
 
 @Composable
 fun EmptyContent() {
